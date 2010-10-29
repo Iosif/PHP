@@ -3,6 +3,8 @@ Basics:
 - Add PM system (Functions are almost done)
 - Add Ban system for admins
 - Add "Leave a Message" system on other people's homepage
+- Like button for each activity / comment with a link to a DB
+friends will be able to see what you "Liked"
 
 Advanced:		// AKA later stage
 - Improve overall security checks
@@ -10,6 +12,9 @@ Advanced:		// AKA later stage
 - Add "Report a bug" system
 - Make sure bots cant register -> Use Captcha ?
 - Add mailing system for just-registered users to receive an activation mail
+- Add system with which a user can change his own homepage with pictures on the background
+- Add youtube embedder
+- Points system, with points you can buy features, points are gained with activity
 
 Additional:		// AKA Not important (yet)
 - Add a system where you can "identify" a person on a picture and add a tag there
