@@ -144,7 +144,7 @@ Class User
             $username = mysql_real_escape_string($username);		// Make sure there are no weird tokens in the variables
             $password = mysql_real_escape_string($password);
             $sha_pass = sha1($password);							// Encrypt the password with "Sha1"
-            $check = mysql_query("select `id` FROM `accounts` WHERE `username` = '".$username."';");	// Query to check if the username isn't already in use
+            $check = mysql_query("select `id` FROM `accounts` WHERE `username` = '".$username."' OR `email` = '".$email."';");	// Query to check if the username isn't already in use
             if (mysql_num_rows($check) == 0)						// If 0 results came back from the above query... (if the account name is free for usage)
             {
                 $raw_account_query = "INSERT INTO `accounts` values ('','".$username."','".$sha_pass."','".$email."','".$country."','".$state."','".$city."','".$gender."','".$birthdate."','0');";
