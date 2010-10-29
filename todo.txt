@@ -1,0 +1,18 @@
+Basics:
+- Add layout
+- Add PM system (Functions are almost done)
+- Add Ban system for admins
+- Add "Leave a Message" system on other people's homepage
+
+Advanced:		// AKA later stage
+- Improve overall security checks
+- Add search system to search for users using multiple filters
+- Add "Report a bug" system
+- Make sure bots cant register -> Use Captcha ?
+- Add mailing system for just-registered users to receive an activation mail
+
+Additional:		// AKA Not important (yet)
+- Add a system where you can "identify" a person on a picture and add a tag there
+- Improve speed of the city form field during registering
+- Add scanner for words that are inappropriate for children
+- Add AjaxChat shoutbox with additional channels
