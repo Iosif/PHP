@@ -39,6 +39,10 @@ else if ($_GET['Friend'])
     $User->AddFriend($_GET['Friend']);
     echo '<meta http-equiv="refresh" content="0;url=?User=">';
 }
+else if ($_POST['PM'])
+{
+    $User->SendPrivateMessage($_POST['receiver']. $_POST['subject'], $_POST['message']);
+}
 
 if ($User->IsLoggedIn() == true)
     $User->RefreshCookie();
@@ -69,8 +73,8 @@ if ($User->IsLoggedIn() == false)
 else
 {
     $User->ShowLogout();
-    echo '<a href=".?ChangePass=1">'.$User->Translate('ChangePass').'</a><br>';
-    echo '<a href=".?ShowAdditionalForm=1">'.$User->Translate('SetAdditional').'</a><br><br>';
+    echo '<a href="?ChangePass=1">'.$User->Translate('ChangePass').'</a><br>';
+    echo '<a href="?ShowAdditionalForm=1">'.$User->Translate('SetAdditional').'</a><br><br>';
     if ($_GET['ChangePass'])
     {
         echo "<hr>";
@@ -81,11 +85,16 @@ else
         echo "<hr>";
         $User->ShowAdditionalForm();
     }
+    else if ($_GET['pm'])
+    {
+        $receiver = $_GET['pm'];
+        $User->DisplayPMControls($receiver);
+    }
     else
     {
         if ($User->IsAdmin())
         {
-            echo '<a href=".?AdminPanel=1">Admin Panel</a><br><br>';
+            echo '<a href="?AdminPanel=1">Admin Panel</a><br><br>';
         }
         $User->ShowHomepage();
     }
@@ -97,7 +106,7 @@ if ($_GET['User'])
     {
         if (strtolower($Username) != strtolower($User->GetName()))
         {
-            
+            echo '<a href="?pm='.$Username.'">Send a PM to this user</a>';
             $User->ShowHomePage($Username);
         }
     }

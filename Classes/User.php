@@ -126,7 +126,8 @@ Class User
     function RefreshCookie()
     {
         require $this->MainConfigFile;
-        setcookie($cookiename, $_COOKIE[$cookiename], time()+$cookietime);      // Make a new cookie with the same name and same info
+        if ($_COOKIE[$cookiename] != "")
+            setcookie($cookiename, $_COOKIE[$cookiename], time()+$cookietime);      // Make a new cookie with the same name and same info
     }
     function DoRegister($Info)			// Begin the register function, get the $username and $password from the function call in index.php
     {
@@ -175,7 +176,10 @@ Class User
             if ($parts[0] != "")
                 $username = $parts[0];
             if ($username != "")
+            {
+                $this->Username = $username;
                 return $username;
+            }
         }
         else if ($id != "")
         {
@@ -201,7 +205,10 @@ Class User
             if ($parts[1] != "")
                 $password = $parts[1];
             if ($password != "")
+            {
+                $this->Password = $password;
                 return $password;
+            }
         }
     }
     function GetID($name = "")
@@ -224,6 +231,8 @@ Class User
                     $this->ID = $result;
                     return $result;
                 }
+                else
+                    die("Unknown error");
             }
         }
     }
@@ -241,8 +250,10 @@ Class User
     }
     function ShowLogin($destination = "")		// Show the login part (left top of index.php when not logged in)
     {
+        if ($destination == "")
+            $destination = "index.php";
         echo '
-            <form name="LogIn" action="'.$destination = "" ? "index.php" : $destination.'" method="POST">
+            <form name="LogIn" action="'.$destination.'" method="POST">
             Username: <input type="text" name="username">
             Password: <input type="password" name="password">
             <input type="submit" name="LogIn" value="Log in">
@@ -591,10 +602,10 @@ Class User
         $raw_add_friend = "INSERT INTO `friends` VALUES ('".$this->GetID()."','".$id."');";
         $add_friend = mysql_query($raw_add_friend);
     }
-    function SendPrivateMessage($id, $message)
+    function SendPrivateMessage($receiver, $subject, $message)
     {
         $this->DB->MakeConnection();
-        $raw_pm_query = "INSERT INTO `private_messages` VALUES ('', '".$id."', '".$this->GetID()."', '".$message."', '".date(d-m-Y)."', '0');";
+        $raw_pm_query = "INSERT INTO `private_messages` VALUES ('', '".$receiver."', '".$this->GetID()."', '".$subject."', '".$message."', '".date(d-m-Y)."', '0');";
         $pm_query = mysql_query($raw_pm_query);
     }
     function GetPMs()
@@ -626,8 +637,16 @@ Class User
             echo $fields['message'];
         }
     }
-    function DisplayPMControls()
+    function DisplayPMControls($receiver)
     {
+        echo '<form name="PM" method="POST" action="index.php">
+        <table>
+        <tr><td>Subject</td> <td><input type="text" name="subject"></td></tr>
+        <tr><td>Message</td> <td><textarea name="message"></td></tr>
+        <input type="hidden" name="receiver" value="'.$receiver.'">
+        <tr><td><input type="submit" value="Send"></td></tr>
+        </table>
+        </form>';
     }
 }
 ?>
